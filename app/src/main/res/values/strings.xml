@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   
+    <string name="app_name">EKI Speak Engine</string>
+
+    <string name="est_sample">See on näitelause. Kuula seda hoolega.</string>
+
+    
+
+    <string name="general_settings">General settingss</string>
+
+    <string name="testset_title">testset title</string>
+    <string name="testset_summary">testset summary.</string>
+</resources>
