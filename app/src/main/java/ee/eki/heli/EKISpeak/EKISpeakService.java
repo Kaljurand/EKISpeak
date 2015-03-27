@@ -22,7 +22,9 @@ import android.util.Log;
  * {@link android.speech.tts.TextToSpeechService}.
  */
 public class EKISpeakService extends TextToSpeechService {
-	private static final String TAG = "EKITtsService";
+
+    public static final String LANG = "et";
+    public static final String COUNTRY = "EE";
 
 	private static final int SAMPLING_RATE_HZ = 48000;
 
@@ -39,7 +41,7 @@ public class EKISpeakService extends TextToSpeechService {
 		mSharedPrefs = getSharedPreferences(
 				GeneralSettingsFragment.SHARED_PREFS_NAME, Context.MODE_PRIVATE);
 
-		onLoadLanguage("est", "EST", "");
+		onLoadLanguage(LANG, COUNTRY, "");
 	}
 
 	@Override
@@ -60,14 +62,14 @@ public class EKISpeakService extends TextToSpeechService {
 	@Override
 	protected int onIsLanguageAvailable(String lang, String country,
 			String variant) {
-		if ("est".equals(lang)) {
-			if ("EST".equals(country)) {
+		if (LANG.equals(lang)) {
+			if (COUNTRY.equals(country)) {
 				return TextToSpeech.LANG_COUNTRY_AVAILABLE;
 			}
 			return TextToSpeech.LANG_AVAILABLE;
 		}
-		return TextToSpeech.LANG_AVAILABLE;
-		// return TextToSpeech.LANG_NOT_SUPPORTED;
+        return TextToSpeech.LANG_AVAILABLE;
+		//return TextToSpeech.LANG_NOT_SUPPORTED;
 	}
 
 	/*

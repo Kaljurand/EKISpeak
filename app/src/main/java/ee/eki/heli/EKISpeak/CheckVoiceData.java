@@ -18,9 +18,7 @@ import java.util.List;
  */
 public class CheckVoiceData extends Activity {
 
-
-	private static final String[] SUPPORTED_LANGUAGES = { "est-EST" }; 
-	// Keele nimi ei tööta isDataInstalled
+	private static final String[] SUPPORTED_LANGUAGES = { "et-EE" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class CheckVoiceData extends Activity {
 		return false;
 	}
 
-	// Keele nimi ei tööta
+	// Keele nimi ei tï¿½ï¿½ta
 	private boolean isDataInstalled(String lang) {
 		return TestInstall();
 	}
