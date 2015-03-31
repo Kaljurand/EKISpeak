@@ -21,3 +21,13 @@ Run Gradle, e.g.
 For the listing of more Gradle tasks, run:
 
     gradle tasks
+
+License
+-------
+
+<http://www.eki.ee/eki/litsents.html>
+
+See also
+--------
+
+- another modification of the original EKI code: <https://play.google.com/store/apps/details?id=ee.eki.heli.EKISpeak>
