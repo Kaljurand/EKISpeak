@@ -16,11 +16,11 @@ Create the file `local.properties` that points to the location of the Android SD
 
 Run Gradle, e.g.
 
-    gradle installDebug
+    ./gradlew installDebug
 
 For the listing of more Gradle tasks, run:
 
-    gradle tasks
+    ./gradlew tasks
 
 License
 -------
@@ -31,3 +31,9 @@ See also
 --------
 
 - another modification of the original EKI code: <https://play.google.com/store/apps/details?id=ee.eki.heli.EKISpeak>
+
+
+TODO
+----
+
+- integrate <https://github.com/ikiissel/synthts_et> and <https://github.com/ikiissel/synthts_vr>
