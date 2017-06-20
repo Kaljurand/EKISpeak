@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 
-/**
- *
- */
 public class GetSampleText extends Activity {
 
     @Override
@@ -23,7 +20,7 @@ public class GetSampleText extends Activity {
 
         Log.i("GetSampleText language: " + language);
 
-        if (language.equals(EKISpeakService.DEFAULT_LANG)) {
+        if (EKISpeakService.DEFAULT_LANG.equals(language)) {
             returnData.putExtra("sampleText", getString(R.string.est_sample));
         } else {
             result = TextToSpeech.LANG_NOT_SUPPORTED;

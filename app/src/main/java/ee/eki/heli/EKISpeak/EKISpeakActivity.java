@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -31,24 +30,24 @@ public class EKISpeakActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        mText = (EditText) findViewById(R.id.etText);
-        mTvMessages = (TextView) findViewById(R.id.tvMessages);
+        mText = findViewById(R.id.etText);
+        mTvMessages = findViewById(R.id.tvMessages);
 
-        ((Button) findViewById(R.id.bStart)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bStart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 say(mText.getText().toString());
             }
         });
 
-        ((Button) findViewById(R.id.bStop)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bStop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stop();
             }
         });
 
-        ((Button) findViewById(R.id.bSettings)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bSettings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

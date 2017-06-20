@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:inputType="textMultiLine"
         android:text="@string/est_demo">
 
         <requestFocus />
@@ -22,6 +23,7 @@
 
     <LinearLayout
         android:id="@+id/llButtons"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -29,12 +31,14 @@
 
         <Button
             android:id="@+id/bStart"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_start" />
 
         <Button
             android:id="@+id/bStop"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_stop" />
@@ -42,6 +46,7 @@
 
         <Button
             android:id="@+id/bSettings"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_settings" />

@@ -5,10 +5,10 @@
     <string name="est_demo" translatable="false">1 Liina sai lina eest 5 pudelit viina19.
         Kus on kass? Kas läks kooli või kooli taha?
         Võõrsõnad on: Zürich, montaaž, šokolaad ja zoo!
-        Tere maailm!
+         Hey wake up!
         1+2-3*4/5=1,0023.</string>
 
-    <string name="app_name">EKI Speak Engine</string>
+    <string name="app_name">EKI Text-to-speech Engine</string>
 
     <string name="button_start">Start</string>
     <string name="button_stop">Stop</string>
