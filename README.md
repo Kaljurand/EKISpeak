@@ -4,23 +4,26 @@ EKI Speak
 Implementation of Android's TextToSpeechService that provides Estonian text-to-speech.
 
 Modification of the source code from
-<http://heli.eki.ee/koduleht/index.php/rakendused>
-(<http://heli.eki.ee/koduleht/images/koduleht/EKISpeak_src.zip>).
+<https://www.eki.ee/heli/index.php?option=com_content&view=article&id=5&Itemid=466>
+(<https://www.eki.ee/heli/images/koduleht/EKIsynt2.zip>).
 
 Compilation
 -----------
 
-Create the file `local.properties` that points to the location of the Android SDK, e.g.
+Create the file `local.properties` that points to the location of the Android SDK
+and NDK, e.g.
 
+    ndk.dir=/home/kaarel/myapps/android-sdk/ndk-bundle
     sdk.dir=/home/kaarel/myapps/android-sdk
 
 Run Gradle, e.g.
 
-    ./gradlew installDebug
+    gradle installDebug
 
-For the listing of more Gradle tasks, run:
+or (in case you have set up release keys) e.g.
 
-    ./gradlew tasks
+    gradle aR
+    gradle deploy
 
 License
 -------
@@ -36,4 +39,4 @@ See also
 TODO
 ----
 
-- integrate <https://github.com/ikiissel/synthts_et> and <https://github.com/ikiissel/synthts_vr>
+- add support for Võro
