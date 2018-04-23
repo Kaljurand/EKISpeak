@@ -3,7 +3,7 @@ EKI Speak
 
 Implementation of Android's TextToSpeechService that provides Estonian text-to-speech.
 
-Modification of the source code from
+Modification of the source code downloaded on 2018-04-22 from
 <https://www.eki.ee/heli/index.php?option=com_content&view=article&id=5&Itemid=466>
 (<https://www.eki.ee/heli/images/koduleht/EKIsynt2.zip>).
 
@@ -40,3 +40,4 @@ TODO
 ----
 
 - add support for Võro
+- make the voice louder

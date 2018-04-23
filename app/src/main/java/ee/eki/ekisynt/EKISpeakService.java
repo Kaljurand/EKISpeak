@@ -11,8 +11,6 @@ import java.util.Locale;
 
 public class EKISpeakService extends TextToSpeechService {
 
-    public static final String TAG = EKISpeakService.class.getSimpleName();
-
     public static final String DEFAULT_LANG = "est";
     public static final String DEFAULT_COUNTRY = "EST";
     public static final Locale DEFAULT_LOCALE = new Locale(DEFAULT_LANG, DEFAULT_COUNTRY);
@@ -133,19 +131,15 @@ public class EKISpeakService extends TextToSpeechService {
 
     @Override
     protected synchronized void onSynthesizeText(SynthesisRequest request, SynthesisCallback callback) {
-        // TODO: map digits to words, etc.
         if (request == null) return;
-//        String text = replaceNumbers(request.getText()) + ".";
         String text = request.getText();
 
         if (TextUtils.isEmpty(text)) {
-            Log.i(TAG, "Break! Text is empty");
+            Log.i("Break! Text is empty");
             return;
         }
 
-//        text = validateInput(text);
-
-        Log.i(TAG, "onSynthesizeText: " + text);
+        Log.i("onSynthesizeText: " + text);
         int load = onLoadLanguage(request.getLanguage(), request.getCountry(), request.getVariant());
 
         if (load == TextToSpeech.LANG_NOT_SUPPORTED) {
@@ -162,7 +156,7 @@ public class EKISpeakService extends TextToSpeechService {
 
         int rate = request.getSpeechRate();
         double mappedRate = mapRate(rate);
-        Log.i(TAG, "RATE: " + rate + " MAPPED RATE: " + mappedRate);
+        Log.i("RATE: " + rate + " MAPPED RATE: " + mappedRate);
         int ht = request.getPitch();
         float mappedHt = mapHT(ht);
         // log("HT: " + ht + " MAPPED HT: " + mappedHt);
@@ -207,9 +201,5 @@ public class EKISpeakService extends TextToSpeechService {
             return MAPPED_HT_NORM -
                     (1.0f * ORIGINAL_HT_NORM - ht) / ORIGINAL_HT_SMALL_STEP;
         }
-    }
-
-    private static String replaceNumbers(String str) {
-        return str.replaceAll("[0-9]+", " number ");
     }
 }

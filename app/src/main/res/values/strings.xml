@@ -2,7 +2,7 @@
 <resources>
 
     <string name="est_sample" translatable="false">Nii kõlab eestikeelne kõnesüntesaator.</string>
-    <string name="est_demo" translatable="false">Eesti Keele Instituut on riigi teadus- ja  arendusasutus, mille põhieesmärk on aidata kaasa eesti keele säilimisele läbi aegade.</string>
+    <string name="est_demo" translatable="false">Eesti Keele Instituut on riigi teadus- ja arendusasutus, mille põhieesmärk on aidata kaasa eesti keele säilimisele läbi aegade.</string>
 
     <string name="app_name">EKI 2nd Text-to-speech Engine</string>
 
@@ -12,6 +12,6 @@
 
     <string name="voice_tnu">eki_et_tnu.htsvoice</string>
     <string name="voice_eva">eki_et_eva.htsvoice</string>
-    <string name="tts_settings_label">EKI sünteeshäälte valik</string>
+    <string name="tts_settings_label">Voices</string>
 
 </resources>

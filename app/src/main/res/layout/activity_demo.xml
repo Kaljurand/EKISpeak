@@ -53,18 +53,4 @@
             android:layout_height="wrap_content"
             android:text="@string/button_settings" />
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/progress_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#7a000000"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_gravity="center"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
-    </FrameLayout>
-
 </RelativeLayout>
