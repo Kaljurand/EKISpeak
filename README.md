@@ -34,10 +34,3 @@ See also
 --------
 
 - another modification of the original EKI code: <https://play.google.com/store/apps/details?id=ee.eki.heli.EKISpeak>
-
-
-TODO
-----
-
-- add support for Võro
-- make the voice louder
