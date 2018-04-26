@@ -134,16 +134,21 @@ public class EKISpeakService extends TextToSpeechService {
         if (request == null) return;
         String text = request.getText();
 
+        Log.i("onSynthesizeText (old): " + text.length() + ", <" + text + ">");
+        text = sanitize(text);
+        Log.i("onSynthesizeText (new): " + text.length() + ", <" + text + ">");
+
         if (TextUtils.isEmpty(text)) {
             Log.i("Break! Text is empty");
+            done(callback);
             return;
         }
 
-        Log.i("onSynthesizeText: " + text);
         int load = onLoadLanguage(request.getLanguage(), request.getCountry(), request.getVariant());
 
         if (load == TextToSpeech.LANG_NOT_SUPPORTED) {
             callback.error();
+            done(callback);
             return;
         }
 
@@ -174,13 +179,24 @@ public class EKISpeakService extends TextToSpeechService {
         jniCallback.setStop(false);
 
         Util.synthTextHTS(text, text.length(), maxBufferSize, mappedRate, mappedHt, jniCallback);
+        done(callback);
+    }
 
+    private void done(SynthesisCallback callback) {
         Log.i("Done");
         callback.done();
     }
 
-    private String validateInput(String text) {
+    private static String validateInput(String text) {
         return text.replaceAll("[\\p{InCyrillic}]", "");
+    }
+
+    /**
+     * This is a temporary hack to avoid libsynthts_et.so crashes on certain inputs, e.g.
+     * - text that starts with a period "."
+     */
+    private static String sanitize(String text) {
+        return text.trim().replaceFirst("^\\.", "").trim();
     }
 
     private double mapRate(int rate) {

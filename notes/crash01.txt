@@ -1,0 +1,29 @@
+Crashed when speaking "."
+
+    Revision: '0'
+    ABI: 'arm64'
+    pid: 2105, tid: 3300, name: SynthThread  >>> ee.eki.ekisynt <<<
+    signal 6 (SIGABRT), code -6 (SI_TKILL), fault addr --------
+        x0   0000000000000000  x1   0000000000000ce4  x2   0000000000000006  x3   0000000000000008
+        x4   0000000000000002  x5   4000000000000000  x6   0000007e696f7e40  x7   7702ff514b4f79fe
+        x8   0000000000000083  x9   ffffffffffffffdf  x10  0000000000000000  x11  0000000000000001
+        x12  ffffffffffffffff  x13  ffffffffffffffff  x14  0000000000000000  x15  ffffffffffffffff
+        x16  0000007e721ceec8  x17  0000007e72177ce8  x18  0000007e66bb8780  x19  0000007e696fa4f8
+        x20  0000000000000006  x21  0000007e696fa450  x22  0000000000000000  x23  0000000000000000
+        x24  0000007e545721d0  x25  0000007e696fa4e8  x26  0000007e545721b8  x27  0000007e696f9f40
+        x28  0000000000000001  x29  0000007e696f9450  x30  0000007e72175190
+        sp   0000007e696f9430  pc   0000007e72177cf0  pstate 0000000060000000
+04-26 23:37:32.447 3301-3301/? A/DEBUG:     #00 pc 000000000006bcf0  /system/lib64/libc.so (tgkill+8)
+        #01 pc 000000000006918c  /system/lib64/libc.so (pthread_kill+64)
+        #02 pc 0000000000023e68  /system/lib64/libc.so (raise+24)
+        #03 pc 000000000001c8ec  /system/lib64/libc.so (abort+52)
+        #04 pc 000000000019e050  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_ZN9__gnu_cxx27__verbose_terminate_handlerEv+396)
+        #05 pc 0000000000154990  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_ZN10__cxxabiv111__terminateEPFvvE+8)
+        #06 pc 00000000001549fc  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_ZSt9terminatev+12)
+        #07 pc 0000000000154b38  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (__cxa_throw+136)
+        #08 pc 000000000012770c  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_Z10make_label8CFSArrayI12phone_structE+11576)
+        #09 pc 000000000012b588  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_Z8do_labelR16utterance_struct+6612)
+        #10 pc 0000000000137e9c  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_Z6do_all13CFSBaseStringIw15CFSStrFunctionsIwEEbb+3620)
+        #11 pc 0000000000078a50  /data/app/ee.eki.ekisynt-1/lib/arm64/libsynthts_et.so (_Z12f_gen_speechPv+824)
+        #12 pc 0000000000068994  /system/lib64/libc.so (_ZL15__pthread_startPv+196)
+        #13 pc 000000000001db00  /system/lib64/libc.so (__start_thread+16)
