@@ -1,7 +1,6 @@
 package ee.eki.ekisynt;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,7 +13,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +24,7 @@ import java.util.Locale;
 
 /**
  * Demo activity. This is a simple activity, for more serious testing install [TODO].
+ * TODO: split the demo text into multiple pieces and speak then in separate utterances.
  */
 public class EKISpeakActivity extends Activity {
 
@@ -36,9 +35,6 @@ public class EKISpeakActivity extends Activity {
     private TextView mTvMessages;
     private EditText mText;
 
-    private View mBtnStart;
-    private View mBtnStop;
-    private View mProgress;
     private CheckBox mInFile;
 
     @Override
@@ -46,24 +42,19 @@ public class EKISpeakActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        mProgress = findViewById(R.id.progress_layout);
+        mText = findViewById(R.id.etText);
+        mTvMessages = findViewById(R.id.tvMessages);
 
-        mText = (EditText) findViewById(R.id.etText);
-        mTvMessages = (TextView) findViewById(R.id.tvMessages);
+        mInFile = findViewById(R.id.chb_in_file);
 
-        mInFile = (CheckBox) findViewById(R.id.chb_in_file);
-
-        mBtnStart = findViewById(R.id.bStart);
-        mBtnStart.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bStart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mInFile.isChecked()) {
-//                    synthFile(mText.getText().toString());
                     checkPermissions();
                 } else {
                     if (!mTts.isSpeaking()) {
-                        String text = validateText(mText.getText().toString());
-                        say(text);
+                        say(mText.getText().toString());
                     } else {
                         Toast.makeText(EKISpeakActivity.this, "Please wait until speaking is finished", Toast.LENGTH_SHORT).show();
                     }
@@ -71,15 +62,14 @@ public class EKISpeakActivity extends Activity {
             }
         });
 
-        mBtnStop = findViewById(R.id.bStop);
-        mBtnStop.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bStop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stop();
             }
         });
 
-        ((Button) findViewById(R.id.bSettings)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bSettings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -88,16 +78,6 @@ public class EKISpeakActivity extends Activity {
                 startActivity(intent);
             }
         });
-    }
-    private String validateText(String str) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            if (ch < 383) { // < ž
-                builder.append(ch);
-            }
-        }
-        return builder.toString();
     }
 
     @Override
@@ -134,10 +114,8 @@ public class EKISpeakActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-//        log("onResume");
     }
 
-    @SuppressLint("NewApi")
     private void say(String text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
             mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -184,13 +162,7 @@ public class EKISpeakActivity extends Activity {
         }
         HashMap<String, String> params = new HashMap<>();
         params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, UTT_ID);
-        int maxTextSize = mTts.getMaxSpeechInputLength();
-        if (text.length() > maxTextSize) {
-            text = text.substring(0, maxTextSize);
-        }
-        mText.setText(text);
-        log("Max text length: " + TextToSpeech.getMaxSpeechInputLength());
-
+        text = truncateIfNeeded(text);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, UTT_ID);
@@ -199,7 +171,7 @@ public class EKISpeakActivity extends Activity {
         }
     }
 
-    @SuppressLint("NewApi")
+    // TODO: share code with say/1
     private void synthFile(String text) {
         try {
             String outFile = Environment.getExternalStorageDirectory() +
@@ -212,7 +184,7 @@ public class EKISpeakActivity extends Activity {
             }
             out.createNewFile();
 
-            HashMap<String, String> myHashRender = new HashMap<String, String>();
+            HashMap<String, String> myHashRender = new HashMap<>();
 
             myHashRender.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, UTT_ID);
 
@@ -221,23 +193,11 @@ public class EKISpeakActivity extends Activity {
 
                     @Override
                     public void onDone(String utteranceId) {
-                        mProgress.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mProgress.setVisibility(View.GONE);
-                            }
-                        });
                         log("onDone: " + utteranceId);
                     }
 
                     @Override
                     public void onError(String utteranceId) {
-                        mProgress.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mProgress.setVisibility(View.GONE);
-                            }
-                        });
                         log("onError: " + utteranceId);
                     }
 
@@ -249,13 +209,6 @@ public class EKISpeakActivity extends Activity {
                                 mTvMessages.setText("");
                             }
                         });
-                        mProgress.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mProgress.setVisibility(View.VISIBLE);
-                            }
-                        });
-
                         log("onStart: " + utteranceId);
                     }
                 });
@@ -268,13 +221,7 @@ public class EKISpeakActivity extends Activity {
                 });
             }
 
-            int maxTextSize = mTts.getMaxSpeechInputLength();
-            if (text.length() > maxTextSize) {
-                text = text.substring(0, maxTextSize);
-            }
-            mText.setText(text);
-            log("Max text length: " + TextToSpeech.getMaxSpeechInputLength());
-
+            text = truncateIfNeeded(text);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mTts.synthesizeToFile(text, null, out, UTT_ID);
             } else {
@@ -283,7 +230,19 @@ public class EKISpeakActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    // TODO: move this check into the service and call an error if the input is too long
+    private String truncateIfNeeded(String text) {
+        int maxTextSize = 4000;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            maxTextSize = TextToSpeech.getMaxSpeechInputLength();
+        }
+        if (text.length() > maxTextSize) {
+            log("Max text length: " + maxTextSize);
+            return text.substring(0, maxTextSize);
+        }
+        return text;
     }
 
     /**
@@ -304,7 +263,7 @@ public class EKISpeakActivity extends Activity {
     public void setLanguage(Locale locale) {
         mTts.setLanguage(locale);
     }
-    
+
 
     public void shutdown() {
         if (mTts != null) {
@@ -317,10 +276,9 @@ public class EKISpeakActivity extends Activity {
             @Override
             public void run() {
                 String text = mTvMessages.getText().toString();
-                if (text.length() > 500 ) {
+                if (text.length() > 500) {
                     text = text.substring(text.length() - 500);
                 }
-
                 text += "\n" + str;
                 mTvMessages.setText(text);
             }
@@ -330,13 +288,13 @@ public class EKISpeakActivity extends Activity {
     public void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {                
+                != PackageManager.PERMISSION_GRANTED) {
 
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        PERMISSIONS_REQUEST_WRITE_STORAGE);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE_STORAGE);
         } else {
-            synthFile(validateText(mText.getText().toString()));
+            synthFile(mText.getText().toString());
         }
     }
 

@@ -5,7 +5,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-	applicationId "ee.eki.ekisynt"
+        applicationId "ee.eki.ekisynt"
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 1202
@@ -78,5 +78,5 @@ task(deploy) << {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }

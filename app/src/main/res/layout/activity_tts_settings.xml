@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context="ee.eki.ekisynt.TtsSettingsActivity">
 
-
     <RadioGroup
         android:id="@+id/hts_voices"
         android:layout_width="match_parent"
@@ -18,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:text="Tõnu" />
+            android:text="@string/label_tnu" />
 
         <RadioButton
             android:id="@+id/hts_eva"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
-            android:text="Eva" />
+            android:text="@string/label_eva" />
     </RadioGroup>
 
     <FrameLayout
@@ -36,8 +35,8 @@
         android:visibility="gone">
 
         <ProgressBar
-            android:layout_gravity="center"
             android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
     </FrameLayout>
 </FrameLayout>

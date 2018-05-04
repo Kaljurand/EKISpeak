@@ -53,7 +53,6 @@ public class EKISpeakService extends TextToSpeechService {
     public void onDestroy() {
         Log.i("onDestroy");
         super.onDestroy();
-//        ShutdownHTS();
         Util.shutDownHTS();
     }
 
@@ -185,10 +184,6 @@ public class EKISpeakService extends TextToSpeechService {
     private void done(SynthesisCallback callback) {
         Log.i("Done");
         callback.done();
-    }
-
-    private static String validateInput(String text) {
-        return text.replaceAll("[\\p{InCyrillic}]", "");
     }
 
     /**
