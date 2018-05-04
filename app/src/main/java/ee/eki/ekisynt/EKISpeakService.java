@@ -189,9 +189,14 @@ public class EKISpeakService extends TextToSpeechService {
     /**
      * This is a temporary hack to avoid libsynthts_et.so crashes on certain inputs, e.g.
      * - text that starts with a period "."
+     * - text == "..."
      */
     private static String sanitize(String text) {
-        return text.trim().replaceFirst("^\\.", "").trim();
+        text = text.trim();
+        if (text.matches("^[\".!?-]+$")) {
+            return "aaah joru kirjavahemärke aaah";
+        }
+        return text.replaceFirst("^\\.+", "").trim();
     }
 
     private double mapRate(int rate) {
