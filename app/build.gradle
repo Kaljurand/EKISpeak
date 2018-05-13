@@ -8,8 +8,8 @@ android {
         applicationId "ee.eki.ekisynt"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1202
-        versionName '1.2.02'
+        versionCode 1203
+        versionName '1.2.03'
 
         externalNativeBuild {
             cmake {
@@ -30,7 +30,7 @@ android {
             debuggable false
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.release
             debuggable false
         }

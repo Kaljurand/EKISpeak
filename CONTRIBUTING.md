@@ -20,3 +20,5 @@ TODO
 - sometimes "off tilde" is spoken at the end of the utterance
 - increase volume
 - add support for Võro
+- allow voices to be removed/added
+- allow other resources (e.g. Vabamorf lexica) to be changed

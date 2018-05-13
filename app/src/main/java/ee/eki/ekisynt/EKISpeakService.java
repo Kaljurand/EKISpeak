@@ -67,7 +67,6 @@ public class EKISpeakService extends TextToSpeechService {
 
     @Override
     protected int onIsLanguageAvailable(String lang, String country, String variant) {
-//        Log.i("onIsLanguageAvailable: " + lang + "/" + country + "/" + variant);
         if (DEFAULT_LANG.equals(lang)) {
             if (DEFAULT_COUNTRY.equals(country)) {
                 return TextToSpeech.LANG_COUNTRY_AVAILABLE;
@@ -84,8 +83,8 @@ public class EKISpeakService extends TextToSpeechService {
      */
     @Override
     protected synchronized int onLoadLanguage(String lang, String country, String variant) {
-        Log.i("onLoadLanguage: " + lang + "/" + country + "/" + variant);
         final int isLanguageAvailable = onIsLanguageAvailable(lang, country, variant);
+        Log.i("onLoadLanguage: " + lang + "/" + country + "/" + variant + "=" + isLanguageAvailable);
 
         if (isLanguageAvailable == TextToSpeech.LANG_NOT_SUPPORTED) {
             return isLanguageAvailable;
@@ -161,16 +160,15 @@ public class EKISpeakService extends TextToSpeechService {
         int rate = request.getSpeechRate();
         double mappedRate = mapRate(rate);
         Log.i("RATE: " + rate + " MAPPED RATE: " + mappedRate);
+
         int ht = request.getPitch();
         float mappedHt = mapHT(ht);
-        // log("HT: " + ht + " MAPPED HT: " + mappedHt);
+        // Log.i("HT: " + ht + " MAPPED HT: " + mappedHt);
 
         Log.i("Start");
         // Get the maximum allowed size of data we can send across in
         // audioAvailable.
-        //final int
         int maxBufferSize = callback.getMaxBufferSize();
-
         if (maxBufferSize > 16000) {
             maxBufferSize = 16000;
         }
