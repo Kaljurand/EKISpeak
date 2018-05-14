@@ -3,7 +3,8 @@
 
     <string name="est_sample" translatable="false">Nii kõlab eestikeelne kõnesüntesaator.</string>
     <string name="est_demo" translatable="false">Eesti Keele Instituut on riigi teadus- ja arendusasutus, mille põhieesmärk on aidata kaasa eesti keele säilimisele läbi aegade.</string>
-    <string name="app_name" translatable="false">EKI 2nd Text-to-speech Engine</string>
+    <string name="app_name" translatable="false">Estonian TTS Demo</string>
+    <string name="service_name" translatable="false">EKI TTS (K)</string>
 
     <string name="label_tnu" translatable="false">Tõnu</string>
     <string name="label_eva" translatable="false">Eva</string>

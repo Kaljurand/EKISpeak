@@ -5,7 +5,7 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "ee.eki.ekisynt"
+        applicationId "ee.eki.ekisynt2"
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 1203
