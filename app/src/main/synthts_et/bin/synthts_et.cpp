@@ -536,7 +536,8 @@ void * f_gen_speech(void * context) {
         size_t n_lines = vc.size();
 
         if (HTS_Engine_synthesize_from_strings(&engineGlobal, &vc[0], n_lines) != TRUE) {
-            return false;
+            return NULL;
+            // was: return false;
         }
 
         LOGI("Help_thread: synthesized from strings");
