@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "ee.eki.ekisynt2"
         minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 1203
-        versionName '1.2.03'
+        targetSdkVersion 28
+        versionCode 1204
+        versionName '1.2.04'
 
         externalNativeBuild {
             cmake {
@@ -54,7 +53,7 @@ if (project.hasProperty('storePassword') &&
     android.buildTypes.release.signingConfig = null
 }
 
-task(deploy) << {
+task deploy(type: Exec) {
     description 'Copy the APK to the deploy directory'
 
     def deploy_dir = System.getenv('APK_DEPLOY_DIR')
@@ -65,18 +64,15 @@ task(deploy) << {
     def apk1 = outputs + 'apk/release/app-release.apk'
     def apk2 = "${deploy_dir}EKISpeak-${version}.apk"
 
-    def output1 = exec {
-        commandLine 'cp', '--verbose', apk1, apk2
-    }
+    commandLine 'cp', '--verbose', apk1, apk2
 
-    def output3 = exec {
-        commandLine 'ls', '-l', deploy_dir
-    }
+    // TODO: how to add multiple commands?
+    // commandLine 'ls', '-l', deploy_dir
 
     println "adb uninstall ee.eki.ekisynt"
-    println "adb install ${apk2}"
+    println "adb install -r ${apk2}"
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
