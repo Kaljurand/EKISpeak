@@ -18,4 +18,6 @@
 
     <string name="tts_settings_label">Voices</string>
 
+    <string name="label_activity_process_text">Read aloud with EKI Speak</string>
+
 </resources>

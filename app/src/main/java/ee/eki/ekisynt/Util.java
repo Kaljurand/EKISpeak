@@ -1,6 +1,7 @@
 package ee.eki.ekisynt;
 
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -64,5 +65,14 @@ public class Util {
 
         }
         return dir + "/";
+    }
+
+    // TODO: move this check into the service and call an error if the input is too long
+    public static String truncateIfNeeded(String text) {
+        int maxTextSize = TextToSpeech.getMaxSpeechInputLength();
+        if (text.length() > maxTextSize) {
+            return text.substring(0, maxTextSize);
+        }
+        return text;
     }
 }

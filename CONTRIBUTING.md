@@ -22,3 +22,5 @@ TODO
 - add support for Võro
 - allow voices to be removed/added
 - allow other resources (e.g. Vabamorf lexica) to be changed
+- allow different voices to be selected in a external app, e.g. Pocket
+- clarify how long input is allowed (seems to be lower than TextToSpeech.getMaxSpeechInputLength(), which is 4000)

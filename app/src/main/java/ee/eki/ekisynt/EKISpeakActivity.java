@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.tts.TextToSpeech;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -117,58 +115,41 @@ public class EKISpeakActivity extends Activity {
     }
 
     private void say(String text) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+        mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
 
-                @Override
-                public void onDone(String utteranceId) {
-                    log("onDone: " + utteranceId);
-                }
+            @Override
+            public void onDone(String utteranceId) {
+                log("onDone: " + utteranceId);
+            }
 
-                @Override
-                public void onError(String utteranceId) {
-                    log("onError: " + utteranceId);
-                }
+            @Override
+            public void onError(String utteranceId) {
+                log("onError: " + utteranceId);
+            }
 
-                @Override
-                public void onError(String utteranceId, int errorCode) {
-                    log("onError: " + utteranceId + "\n errorCode: " + errorCode);
-                }
+            @Override
+            public void onError(String utteranceId, int errorCode) {
+                log("onError: " + utteranceId + "\n errorCode: " + errorCode);
+            }
 
-                @Override
-                public void onBeginSynthesis(String utteranceId, int sampleRateInHz, int audioFormat, int channelCount) {
-                    super.onBeginSynthesis(utteranceId, sampleRateInHz, audioFormat, channelCount);
-                    log("onBeginSynthesis: " + utteranceId + " sampleRateInHz: " + sampleRateInHz
-                            + " format: " + audioFormat + " channelCount: " + channelCount);
-                }
+            @Override
+            public void onBeginSynthesis(String utteranceId, int sampleRateInHz, int audioFormat, int channelCount) {
+                super.onBeginSynthesis(utteranceId, sampleRateInHz, audioFormat, channelCount);
+                log("onBeginSynthesis: " + utteranceId + " sampleRateInHz: " + sampleRateInHz
+                        + " format: " + audioFormat + " channelCount: " + channelCount);
+            }
 
-                @Override
-                public void onStart(String utteranceId) {
-                    log("onStart: " + utteranceId);
-                }
+            @Override
+            public void onStart(String utteranceId) {
+                log("onStart: " + utteranceId);
+            }
 
-                @Override
-                public void onStop(String utteranceId, boolean interrupted) {
-                    log("onStop: " + utteranceId + "\n interrupted: " + interrupted);
-                }
-            });
-        } else {
-            mTts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
-                @Override
-                public void onUtteranceCompleted(String utteranceId) {
-                    log("onUtteranceCompleted: " + utteranceId);
-                }
-            });
-        }
-        HashMap<String, String> params = new HashMap<>();
-        params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, UTT_ID);
-        text = truncateIfNeeded(text);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mTts.speak(text, TextToSpeech.QUEUE_FLUSH, null, UTT_ID);
-        } else {
-            mTts.speak(text, TextToSpeech.QUEUE_FLUSH, params);
-        }
+            @Override
+            public void onStop(String utteranceId, boolean interrupted) {
+                log("onStop: " + utteranceId + "\n interrupted: " + interrupted);
+            }
+        });
+        mTts.speak(Util.truncateIfNeeded(text), TextToSpeech.QUEUE_FLUSH, null, UTT_ID);
     }
 
     // TODO: share code with say/1
@@ -184,71 +165,39 @@ public class EKISpeakActivity extends Activity {
             }
             out.createNewFile();
 
-            HashMap<String, String> myHashRender = new HashMap<>();
+            mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
 
-            myHashRender.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, UTT_ID);
+                @Override
+                public void onDone(String utteranceId) {
+                    log("onDone: " + utteranceId);
+                }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                mTts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                @Override
+                public void onError(String utteranceId) {
+                    log("onError: " + utteranceId);
+                }
 
-                    @Override
-                    public void onDone(String utteranceId) {
-                        log("onDone: " + utteranceId);
-                    }
-
-                    @Override
-                    public void onError(String utteranceId) {
-                        log("onError: " + utteranceId);
-                    }
-
-                    @Override
-                    public void onStart(String utteranceId) {
-                        mTvMessages.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mTvMessages.setText("");
-                            }
-                        });
-                        log("onStart: " + utteranceId);
-                    }
-                });
-            } else {
-                mTts.setOnUtteranceCompletedListener(new TextToSpeech.OnUtteranceCompletedListener() {
-                    @Override
-                    public void onUtteranceCompleted(String utteranceId) {
-                        log("onUtteranceCompleted: " + utteranceId);
-                    }
-                });
-            }
-
-            text = truncateIfNeeded(text);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mTts.synthesizeToFile(text, null, out, UTT_ID);
-            } else {
-                mTts.synthesizeToFile(text, myHashRender, outFile);
-            }
+                @Override
+                public void onStart(String utteranceId) {
+                    mTvMessages.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mTvMessages.setText("");
+                        }
+                    });
+                    log("onStart: " + utteranceId);
+                }
+            });
+            mTts.synthesizeToFile(Util.truncateIfNeeded(text), null, out, UTT_ID);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // TODO: move this check into the service and call an error if the input is too long
-    private String truncateIfNeeded(String text) {
-        int maxTextSize = 4000;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            maxTextSize = TextToSpeech.getMaxSpeechInputLength();
-        }
-        if (text.length() > maxTextSize) {
-            log("Max text length: " + maxTextSize);
-            return text.substring(0, maxTextSize);
-        }
-        return text;
-    }
-
     /**
      * Interrupts the current utterance and discards other utterances in the queue.
      *
-     * @return {@ERROR} or {@SUCCESS}
+     * @return {@code ERROR} or {@code SUCCESS}
      */
     public int stop() {
         return mTts.stop();
@@ -307,7 +256,6 @@ public class EKISpeakActivity extends Activity {
 
                     synthFile(mText.getText().toString());
                 }
-                return;
             }
         }
     }
